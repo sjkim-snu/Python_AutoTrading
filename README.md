@@ -87,12 +87,17 @@
    ```bash
    git clone https://github.com/sjkim-snu/2025_PythonProject.git
 
-2. **환경 설정 (Anaconda Prompt에서 실행)**  
+2. **Learning Parameters Download**
+   - https://drive.google.com/file/d/1h_ABxd10qbEwSp68wu3CrlbYUV67WN5N/view?usp=sharing
+   - Clone 폴더 내부에 다운로드 후 압축 해제 
+
+
+3. **환경 설정 (Anaconda Prompt에서 실행)**  
    ```bash
     conda env create -n my_custom_env -f environment.yml
     conda activate my_custom_env
 
-3. **설정 파일 작성 (`config.yaml`)**  
+4. **설정 파일 작성 (`config.yaml`)**  
    ```yaml
    # 한국투자증권에서 API 서비스 신청 시 받은 Appkey, Appsecret 값
    APP_KEY: "your_app_key"                     
@@ -120,12 +125,12 @@
    INTERVAL_SEC: 60         # Loop 주기 (매수/매도 주기)
    IDLE_INTERVAL_SEC: 1800  # 대기 모드 알림 주기 (장외시간)
 
-4. **코드 실행**  
+5. **코드 실행**  
    ```bash
    cd 2025_PythonProject
    python main.py
 
-5. **뉴스 데이터, 거래 로그 및 차트 확인**
+6. **뉴스 데이터, 거래 로그 및 차트 확인**
 - 원본 뉴스 CSV: `news/`  
 - 감성 분석 CSV: `sentiment/`    
 - 트레이드 내역: `logs/trades.csv`  
@@ -134,7 +139,7 @@
     ```bash
     python TradeLogger.py
     ```
-6. **Reference Code**
+7. **Reference Code**
 - 개발 과정에서 유튜버 조코딩이 개발한 코드를 참조하였음
 - https://github.com/youtube-jocoding/koreainvestment-autotrade
 
