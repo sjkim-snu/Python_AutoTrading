@@ -208,8 +208,8 @@
      - **Sentiment (S)**, **Momentum (M)**, **RSI (R)** 3요소 계산  
      - 각 항목에 `+1/0/−1` 점수 부여 → `total` 합산  
    - `decide_trade(total, holdings) -> str`  
-     - `total ≥ 1` → `"buy"`  
-     - `total ≤ -1` & 보유 수량 > 0 → `"sell"`  
+     - `total ≥ 2` → `"buy"`  
+     - `total ≤ -2` & 보유 수량 > 0 → `"sell"`  
      - 그 외 → `"hold"`  
    - `loop_once() -> None`  
      1. 현지 시간(ET) 확인 → 장중/장외·주말 여부 판정  
@@ -331,7 +331,7 @@
 - **Encoder-Only 구조**: BERT/FinBERT 계열은 Transformer의 encoder 부분만 사용하여 문장 이해와 특성 추출에 집중  
 
 **Jupyter Notebook 연동**  
-- `finbert_transformer_sentiment.ipynb` 
+- `finbert_transformer_sentiment.ipynb` 파일 참고고
 -  위 원리를 활용해 `ProsusAI/finbert` Transformer 모델을 금융 뉴스 헤드라인 감성 분석에 fine-tuning 합니다.
 
 **주요 기능:**  
@@ -341,7 +341,7 @@
    - train/validation split (80/20)  
 
 2. **Model Setup**  
-   - `ProsusAI/finbert` pretrained Transformer model 불러와 3-class classification head 구성  
+   - `ProsusAI/finbert` pretrained Transformer model 불러와서 3-class classification head 구성  
    - tokenizer 설정 (`AutoTokenizer.from_pretrained`)  
 
 3. **Hyperparameter Tuning (Optuna)**  
