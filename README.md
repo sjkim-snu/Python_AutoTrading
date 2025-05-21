@@ -264,12 +264,11 @@
 
 1. **Git clone**  
    ```bash
-   git clone https://github.com/sjkim-snu/2025_PythonProject.git
+   git clone https://github.com/sjkim-snu/Python_AutoTrading.git
 
 2. **Learning Parameters Download**
    - https://drive.google.com/file/d/1h_ABxd10qbEwSp68wu3CrlbYUV67WN5N/view?usp=sharing
    - Clone 폴더 내부에 다운로드 후 압축 해제 
-
 
 3. **환경 설정 (Anaconda Prompt에서 실행)**  
    ```bash
@@ -306,7 +305,7 @@
 
 5. **코드 실행**  
    ```bash
-   cd 2025_PythonProject
+   cd Python_AutoTrading
    python main.py
 
 6. **뉴스 데이터, 거래 로그 및 차트 확인**
