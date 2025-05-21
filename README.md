@@ -361,7 +361,7 @@
 - Code : [sentiment-analysis-on-financial-news (Kaggle)](https://www.kaggle.com/code/quangnguynngnht/sentiment-analysis-on-financial-news)  
 
 ## 👥 4. Contributor
-<div style="font-size:90%">
+<div style="font-size:80%">
 
 | 담당   | 이름   | 소속             | 메일                  | 주요 역할                                                   |
 |--------|--------|------------------|-----------------------|:-----------------------------------------------------------:|
