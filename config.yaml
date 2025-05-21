@@ -1,0 +1,44 @@
+# ── AutoTrader 설정 ────────────────────────
+SYMBOLS:
+  - AAPL  # Apple
+  - MSFT  # Microsoft
+  - AMZN  # Amazon
+  - GOOGL # Google
+  - NVDA  # Nvidia
+
+# 최대 매수 금액 (USD)
+BUY_UNIT_USD:       200
+
+# Momentum & RSI 설정
+MOMENTUM_BARS:      3
+RSI_PERIOD:         14
+
+# 운영 모드 (true: 시뮬레이션; false: 실거래)
+TEST_MODE:          false
+
+# 루프 주기 (초)
+INTERVAL_SEC:       180
+
+# 장외/주말 대기 메시지 주기 (초)
+IDLE_INTERVAL_SEC:  1800
+
+# # 체결강도 임계값 및 샘플 크기
+# V_HIGH:             110
+# V_LOW:              90
+# V_SAMPLE:           5
+
+# ── API 설정 ────────────────────────
+# 홈페이지에서 API서비스 신청시 받은 Appkey, Appsecret 값
+APP_KEY: "your_key"
+APP_SECRET: "your_secret"
+
+# 계좌번호 앞 8자리
+CANO: "your_account_num"
+# 계좌번호 뒤 2자리
+ACNT_PRDT_CD: "your_account_num"
+
+# 실전투자
+URL_BASE: "https://openapi.koreainvestment.com:9443"
+
+# Discord Web
+DISCORD_WEBHOOK_URL: "your_discord_server"
