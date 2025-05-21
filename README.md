@@ -16,6 +16,7 @@
 - `threading`, `time` 을 이용한 루프 제어  
 - `TradingBot`, `NewsCrawler`, `SentimentAnalyzer`, `TradeLogger` 클래스 호출  
 - ET 타임존 처리: `zoneinfo` 모듈  
+
 **주요 기능:**  
 - 종목 별 뉴스 CSV 생성(`news/`)  
 - 뉴스 감성 분석 CSV 생성(`sentiment/`)  
@@ -30,6 +31,7 @@
 **사용된 문법 및 라이브러리:**  
 - `csv`, `pandas` 로 데이터 입출력  
 - `matplotlib` 으로 그래프 도출  
+
 **주요 기능:**  
 - `logs/trades.csv`, `logs/equity.csv` 초기화 및 헤더 설정  
 - `log_trade()`: 실행된 매수/매도 내역 기록  
@@ -43,6 +45,7 @@
 - `requests`, `BeautifulSoup` 으로 HTTP 요청 및 HTML 파싱  
 - `pandas` 로 DataFrame 처리 및 CSV 저장  
 - `yaml` 로 `config.yaml` 읽기  
+
 **주요 기능:**  
 - `fetch_yahoo_news()`: Yahoo Finance API 이용 뉴스 조회  
 - `fetch_finviz_news()`: Finviz 뉴스 테이블 스크래핑 및 시간 정규화  
@@ -54,6 +57,7 @@
 **사용된 문법 및 라이브러리:**  
 - `transformers`, `torch` 로 사전 학습된 분류 모델 로드 및 추론  
 - `pandas` 로 CSV 처리  
+
 **주요 기능:**  
 - `get_sentiment_analysis()`: `news/*.csv` → `sentiment/*_sentiment.csv` 생성  
 - 중립(neutral) 제외 후, 긍정·부정 비율 2/3 기준으로 점수 (+1, –1, 0) 반환  
@@ -64,6 +68,7 @@
 **사용된 문법 및 라이브러리:**  
 - `requests`, `yaml` 로 HTTP 요청 및 설정 로딩  
 - `hashlib`, `json` 등 해시·직렬화 처리  
+
 **주요 기능:**  
 - `_request_new_token()`, `refresh_token_if_needed()`: 토큰 발급 및 갱신, `token.json` 저장  
 - `get_balance()`, `get_stock_balance()`, `get_account_summary()`: 잔고 및 환율 포함 요약 조회  
@@ -76,6 +81,7 @@
 **사용된 문법 및 라이브러리:**  
 - `threading`, `signal` 로 스레드 및 종료 이벤트 처리  
 - ET 타임존 설정: `zoneinfo` 모듈  
+
 **주요 기능:**  
 - 전역 `STOP_EVENT` 및 SIGINT 핸들러 설정  
 - `AutoTrader.run()` 스레드 실행, 예외 시 30초 대기 후 재시작  
