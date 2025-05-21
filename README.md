@@ -319,7 +319,7 @@
     python TradeLogger.py
     ```
 7. **Reference Code**
-- 개발 과정에서 유튜버 조코딩이 개발한 코드를 참조하였음
+- 개발 과정에서 유튜버 조코딩이 개발한 코드를 참고
 - https://github.com/youtube-jocoding/koreainvestment-autotrade
 
 ## 3. 🤖 About Sentiment Analysis
@@ -331,7 +331,7 @@
 - **Encoder-Only 구조**: BERT/FinBERT 계열은 Transformer의 encoder 부분만 사용하여 문장 이해와 특성 추출에 집중  
 
 **Jupyter Notebook 연동**  
-- `finbert_transformer_sentiment.ipynb` 파일 참고고
+- `finbert_transformer_sentiment.ipynb` 파일 참고
 -  위 원리를 활용해 `ProsusAI/finbert` Transformer 모델을 금융 뉴스 헤드라인 감성 분석에 fine-tuning 합니다.
 
 **주요 기능:**  
