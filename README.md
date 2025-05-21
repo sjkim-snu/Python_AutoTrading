@@ -361,9 +361,10 @@
 - Code : [sentiment-analysis-on-financial-news (Kaggle)](https://www.kaggle.com/code/quangnguynngnht/sentiment-analysis-on-financial-news)  
 
 ## 👥 4. Contributor
-| 담당     | 이름     | 소속           | 주요 역할                                                   |
-| -------- | -------- | -------------- | ----------------------------------------------------------- |
-| 팀장     | 김철기   | 대학원생       | 프로젝트 일정 관리, TradingBot 개발 (Token 알고리즘) |
-| 개발자   | 김성진   | 항공우주공학과 | Code Structure 담당, NewsCrawler, SentimentAnalyzer, AutoTrader 개발      |
-| 개발자   | 차의진   | 윤리교육과     | TradingBot 개발 (매수/매도 알고리즘)             |
+| 담당     | 이름     | 소속           | 메일           | 주요 역할                                                   |
+| -------- | -------- | -------------- | -------------- | ----------------------------------------------------------- |
+| 팀장     | 김철기   | 응용공학과       |  kkcjftm@naver.com  | Project Management / TradingBot 개발       |
+| 개발자   | 김성진   | 항공우주공학과 | ksjsms@snu.ac.kr | Code Structure Management / NewsCrawler, SentimentAnalyzer, AutoTrader 개발 |
+| 개발자   | 차의진   | 윤리교육과     |  space_cha@naver.com | Trade Algorithm Validation / AutoTrader 개발 (매수/매도 알고리즘)                        |
+
 
