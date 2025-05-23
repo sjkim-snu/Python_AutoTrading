@@ -360,6 +360,57 @@ class TradingBot:
             "eval_pnl":    eval_pnl_krw,
             "total_asset": total_asset_krw,
         }
+        
+    def get_usd_balance(self) -> float:
+        self.refresh_token_if_needed()
+
+        headers = {
+            "Content-Type":  "application/json",
+            "authorization": f"Bearer {self.access_token}",
+            "appKey":        self.APP_KEY,
+            "appSecret":     self.APP_SECRET,
+            "tr_id":         "TTTT3012R",
+            "custtype":      "P",
+        }
+        params = {
+            "CANO":         self.CANO,
+            "ACNT_PRDT_CD": self.ACNT_PRDT_CD,
+            "OVRS_EXCG_CD": "NASD",
+            "TR_CRCY_CD":   "",          # ★ 반드시 빈 문자열로! (통화 필터 해제)
+            "CTX_AREA_FK200": "",
+            "CTX_AREA_NK200": "",
+        }
+
+        url  = f"{self.URL_BASE}/uapi/overseas-stock/v1/trading/inquire-balance"
+        res  = requests.get(url, headers=headers, params=params, timeout=5).json()
+
+        # output1·2·3 → list 로 정규화
+        def _n(x): return x if isinstance(x, list) else ([x] if isinstance(x, dict) else [])
+        rows = _n(res.get("output2")) + _n(res.get("output3"))  # ← output3 추가
+        if not rows: rows = _n(res.get("output1"))
+
+        cash_keys = (
+            "frcr_drwg_psbl_amt_1",  # 출금·주문가능 외화
+            "frcr_dncl_amt_2",       # 외화예수금
+            "frcr_use_psbl_amt",     # 통합 사용가능
+            "ovrs_avlb_ord_amt",
+            "frcr_psbl_ord_amt",
+            "psbl_ord_amt",
+        )
+
+        cash_usd = 0.0
+        for r in rows:
+            # 일부 응답은 통화코드(crcy_cd) 가 없음 → 금액이 1개라도 잡히면 그대로 사용
+            for k in cash_keys:
+                v = r.get(k)
+                if v and float(v) > 0:
+                    cash_usd = float(v)
+                    break
+            if cash_usd:
+                break
+
+        # self.send_message(f"💵 해외 주문가능 잔고 {cash_usd:,.2f} USD")
+        return cash_usd
 
     # ─────────────────────────────────────────────────────────
     # 주문
