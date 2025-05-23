@@ -275,7 +275,11 @@
     conda env create -n my_custom_env -f environment.yml
     conda activate my_custom_env
 
-4. **설정 파일 작성 (`config.yaml`)**  
+4. VSCode에 가상환경 적용
+  - Ctrl + Shift + P -> Select interpreter
+  - my_custom_env 선택택
+
+5. **설정 파일 작성 (`config.yaml`)**  
    ```yaml
    # 한국투자증권에서 API 서비스 신청 시 받은 Appkey, Appsecret 값
    APP_KEY: "your_app_key"                     
@@ -303,12 +307,12 @@
    INTERVAL_SEC: 60         # Loop 주기 (매수/매도 주기)
    IDLE_INTERVAL_SEC: 1800  # 대기 모드 알림 주기 (장외시간)
 
-5. **코드 실행**  
+6. **코드 실행**  
    ```bash
    cd Python_AutoTrading
    python main.py
 
-6. **뉴스 데이터, 거래 로그 및 차트 확인**
+7. **뉴스 데이터, 거래 로그 및 차트 확인**
 - 원본 뉴스 CSV: `news/`  
 - 감성 분석 CSV: `sentiment/`    
 - 트레이드 내역: `logs/trades.csv`  
@@ -317,7 +321,7 @@
     ```bash
     python TradeLogger.py
     ```
-7. **Reference Code**
+8. **Reference Code**
 - 개발 과정에서 유튜버 조코딩이 개발한 코드를 참고
 - https://github.com/youtube-jocoding/koreainvestment-autotrade
 
