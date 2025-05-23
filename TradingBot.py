@@ -491,3 +491,4 @@ class TradingBot:
             self.send_message(f"❌ 매도 실패: {code} @ {price:.2f} → {err}")
 
         return ok
+    
