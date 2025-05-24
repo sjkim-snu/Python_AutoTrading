@@ -259,6 +259,10 @@
         - `time.sleep(30)` 후 루프 재시작  
      5. 루프 종료 후 `"👋 main.py 정상 종료"` 메시지 전송  
 
+### 📣 ReferenceCode.py
+- 개발 과정에서 유튜버 조코딩이 개발한 코드를 참고
+- https://github.com/youtube-jocoding/koreainvestment-autotrade
+
 
 ## 📦 2. 사용 방법
 
@@ -321,9 +325,6 @@
     ```bash
     python TradeLogger.py
     ```
-8. **Reference Code**
-- 개발 과정에서 유튜버 조코딩이 개발한 코드를 참고
-- https://github.com/youtube-jocoding/koreainvestment-autotrade
 
 ## 3. 🤖 About Sentiment Analysis
 
