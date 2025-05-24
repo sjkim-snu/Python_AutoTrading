@@ -275,9 +275,9 @@
     conda env create -n my_custom_env -f environment.yml
     conda activate my_custom_env
 
-4. VSCode에 가상환경 적용
-  - Ctrl + Shift + P -> Select interpreter
-  - my_custom_env 선택택
+4. **VSCode에 가상환경 적용**
+- Ctrl + Shift + P -> Select interpreter
+- my_custom_env 선택
 
 5. **설정 파일 작성 (`config.yaml`)**  
    ```yaml
@@ -353,7 +353,7 @@
 
 4. **Training & Evaluation**  
    - 최적 hyperparameter로 `Trainer` 초기화 후 전체 데이터로 fine-tuning  
-   - validation set에서 F1 score 및 accuracy 계산  
+   - validation set에서 F1 score 계산 (Result : 0.844)
    - `confusion_matrix` heatmap 시각화  
 
 5. **Model 저장 & 배포 준비**  
