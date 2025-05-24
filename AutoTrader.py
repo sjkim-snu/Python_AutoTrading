@@ -199,13 +199,13 @@ class AutoTrader:
 
                 need_usd = qty_planned * price
 
-                # ── [변경] 잔액이 부족해도 주문 시도 ─────────────
-                if cash_usd < need_usd:
-                    self.bot.send_message(
-                        f"⚠️ 잔액 부족 가능: {cash_usd:.2f} USD < "
-                        f"{qty_planned}주 × {price:.2f} USD = {need_usd:.2f} USD\n"
-                        f"→ nevertheless trying to BUY..."
-                    )
+                # # ── [변경] 잔액이 부족해도 주문 시도 ─────────────
+                # if cash_usd < need_usd:
+                #     self.bot.send_message(
+                #         f"⚠️ 잔액 부족 가능: {cash_usd:.2f} USD < "
+                #         f"{qty_planned}주 × {price:.2f} USD = {need_usd:.2f} USD\n"
+                #         f"→ nevertheless trying to BUY..."
+                #     )
 
                 # 실제 주문
                 if self.test_mode:
