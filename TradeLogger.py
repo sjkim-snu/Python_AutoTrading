@@ -26,6 +26,10 @@ class TradeLogger:
         self.dir.mkdir(exist_ok=True)
         self.currency = currency
 
+        # 내부 현금 잔고를 시작 잔액으로 설정
+        self.cash_balance = initial_cash
+        self.realized_pnl = 0.0
+
         # 고정된 파일명 사용
         self.trade_csv = self.dir / "trades.csv"
         self.equity_csv = self.dir / "equity.csv"
@@ -42,18 +46,29 @@ class TradeLogger:
                 f.write(f"# starting_cash,{initial_cash:.2f}\n")
                 f.write("time,cash,stock_value,total_equity,realized_pnl\n")
 
-        self.realized_pnl = 0.0
-        # 최초 스냅샷 (stock_value=0, realized_pnl=0)
-        self._write_initial_snapshot(initial_cash)
+            # 최초 스냅샷 기록 (stock_value=0, realized_pnl=0)
+            self._write_initial_snapshot()
 
-    def _write_initial_snapshot(self, cash: float) -> None:
+    def _write_initial_snapshot(self) -> None:
         t = dt.datetime.now(KST).isoformat(sep=" ", timespec="seconds")
-        total = cash
+        total = self.cash_balance
         with self.equity_csv.open("a", encoding="utf-8", newline="") as f:
-            csv.writer(f).writerow([t, f"{cash:.2f}", "0.00", f"{total:.2f}", "0.00"])
+            csv.writer(f).writerow([
+                t,
+                f"{self.cash_balance:.2f}",
+                "0.00",
+                f"{total:.2f}",
+                f"{self.realized_pnl:.2f}",
+            ])
 
     def log_trade(self, *, symbol: str, side: str, qty: float, price: float) -> None:
+        # amount: + for buy, – for sell
         amount = qty * price * (1 if side == "buy" else -1)
+
+        # 내부 현금 잔고 업데이트
+        self.cash_balance -= amount
+
+        # 실현손익 업데이트 (매도 시)
         if side == "sell":
             self.realized_pnl += -amount
 
@@ -61,26 +76,27 @@ class TradeLogger:
         with self.trade_csv.open("a", encoding="utf-8", newline="") as f:
             csv.writer(f).writerow([t, symbol, side, qty, price, amount])
 
-    def log_snapshot(self, *, cash: float, stock_value: float) -> None:
-        total = cash + stock_value
+    def log_snapshot(self, *, cash: float = None, stock_value: float) -> None:
+        """
+        :param cash:       무시하고 내부 cash_balance 사용
+        :param stock_value: 보유 주식 가치 (USD)
+        """
+        total = self.cash_balance + stock_value
         t = dt.datetime.now(KST).isoformat(sep=" ", timespec="seconds")
         with self.equity_csv.open("a", encoding="utf-8", newline="") as f:
-            csv.writer(f).writerow(
-                [
-                    t,
-                    f"{cash:.2f}",
-                    f"{stock_value:.2f}",
-                    f"{total:.2f}",
-                    f"{self.realized_pnl:.2f}",
-                ]
-            )
+            csv.writer(f).writerow([
+                t,
+                f"{self.cash_balance:.2f}",
+                f"{stock_value:.2f}",
+                f"{total:.2f}",
+                f"{self.realized_pnl:.2f}",
+            ])
 
     def draw_graphs(self) -> None:
         if not self.equity_csv.exists():
             print(f"🛑 {self.equity_csv} 가 없습니다. 먼저 로그를 생성하세요.")
             return
 
-        # 주석(#) 건너뛰고 로드
         equity = pd.read_csv(self.equity_csv, comment="#", parse_dates=["time"])
         if equity.empty:
             print("ℹ️ equity.csv 가 비어 있습니다.")
@@ -132,7 +148,9 @@ class TradeLogger:
         trades = pd.read_csv(self.trade_csv, parse_dates=["time"])
         if not trades.empty:
             trades["elapsed_min"] = (
-                pd.to_datetime(trades["time"]).dt.tz_localize(KST) - start_time
+                pd.to_datetime(trades["time"])
+                .dt.tz_localize(KST)
+                - start_time
             ).dt.total_seconds() / 60.0
 
             syms = trades["symbol"].unique()
