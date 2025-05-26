@@ -30,6 +30,9 @@ DEFAULT_INTERVAL_SEC      = 60
 DEFAULT_IDLE_INTERVAL_SEC = 30 * 60
 # ───────────────────────────────────────────────────────
 
+# ─── Logger 시작 잔액 설정 (config.yaml에서 재정의 불가) ────
+DEFAULT_START_CASH_USD    = 430
+# ───────────────────────────────────────────────────────
 
 class AutoTrader:
     def __init__(
@@ -48,8 +51,12 @@ class AutoTrader:
         # TradingBot 초기화 (API 설정)
         self.bot = TradingBot(config_path=config_path)
 
-        # Logger 연동
-        self.bot.logger = TradeLogger(log_dir="logs")   # ← 한 줄 추가
+        # Logger 연동 (기본 USD 단위 시작 잔액 전달)
+        self.bot.logger = TradeLogger(
+            log_dir="logs",
+            initial_cash=DEFAULT_START_CASH_USD,
+            currency="USD",
+        )
 
         # 사용자 정의 가능한 설정
         self.symbols           = cfg.get("SYMBOLS", symbols or DEFAULT_SYMBOLS)
@@ -102,9 +109,9 @@ class AutoTrader:
 
     # ─── 매매 결정 ─────────────────────────────────────
     def decide_trade(self, total: int, holdings: int) -> str:
-        if total >= 5:
+        if total >= 2:
             return "buy"
-        if total <= 3 and holdings > 0:
+        if total <= -2 and holdings > 0:
             return "sell"
         return "hold"
 
@@ -161,7 +168,7 @@ class AutoTrader:
         for sym in self.symbols:
             tic = time.time()
 
-            bars  = bars_map.get(sym, [])
+            bars       = bars_map.get(sym, [])
             score_data = self.compute_scores(
                 sym=sym,
                 sentiment=sentiments.get(sym, 0),
@@ -179,16 +186,14 @@ class AutoTrader:
 
             price = bars[0]["last"] if bars else 0.0
 
-            # ── ① 매수 로직 ───────────────────────────────
+            # ── 매수 로직 ───────────────────────────────
             if action == "buy":
-                # 이미 보유한 종목이면 매수하지 않음
                 if holdings.get(sym, 0) > 0:
                     self.bot.send_message(
                         f"🚫 {sym} 매수 생략 : 이미 {holdings[sym]}주 보유 중"
                     )
                     continue
 
-                # 제한보다 1주 가격이 더 높은 경우 매수하지 않음
                 qty_planned = int(self.buy_unit_usd / price)
                 if qty_planned == 0:
                     self.bot.send_message(
@@ -199,15 +204,6 @@ class AutoTrader:
 
                 need_usd = qty_planned * price
 
-                # # ── [변경] 잔액이 부족해도 주문 시도 ─────────────
-                # if cash_usd < need_usd:
-                #     self.bot.send_message(
-                #         f"⚠️ 잔액 부족 가능: {cash_usd:.2f} USD < "
-                #         f"{qty_planned}주 × {price:.2f} USD = {need_usd:.2f} USD\n"
-                #         f"→ nevertheless trying to BUY..."
-                #     )
-
-                # 실제 주문
                 if self.test_mode:
                     self.bot.send_message(
                         f"[TEST MODE] BUY: {sym} {qty_planned}주 @ {price:.2f}"
@@ -226,7 +222,6 @@ class AutoTrader:
                     if self.bot.sell("NASD", sym, qty, price):
                         self.soldout[sym] = True
 
-            # ── 분산 대기 (심볼 간 1 초 보장) ─────────────────
             elapsed = time.time() - tic
             if elapsed < 1:
                 self.stop_event.wait(timeout=1 - elapsed)
@@ -257,7 +252,6 @@ class AutoTrader:
             except Exception as e:
                 self.bot.send_message(f"⚠️ 루프 예외: {e}")
 
-            # 루프 주기 유지
             elapsed = time.time() - start
             if elapsed < self.interval_sec:
                 self.stop_event.wait(timeout=self.interval_sec - elapsed)
@@ -265,7 +259,6 @@ class AutoTrader:
         self.bot.send_message("🛑 AutoTrader 종료 완료")
 
 
-# ─── 단독 실행 (디버그 용도) ─────────────────────────────
 if __name__ == "__main__":
     import signal
 
