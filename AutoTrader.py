@@ -104,14 +104,14 @@ class AutoTrader:
             elif rsi > 70:
                 score["R"] = -1
 
-        score["total"] = score["S"] + score["M"] + score["R"]
+        score["total"] = score["S"] * 0.2 + score["M"] * 1.2 + score["R"] * 0.6
         return score
 
     # ─── 매매 결정 ─────────────────────────────────────
-    def decide_trade(self, total: int, holdings: int) -> str:
-        if total >= 2:
+    def decide_trade(self, total: float, holdings: int) -> str:
+        if total >= 1.0:
             return "buy"
-        if total <= -2 and holdings > 0:
+        if total <= -1.0 and holdings > 0:
             return "sell"
         return "hold"
 
