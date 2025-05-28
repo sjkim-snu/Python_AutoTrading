@@ -206,10 +206,10 @@
      - `stop_event`를 통해 외부 중단 신호 수신 준비  
    - `compute_scores(sym, sentiment, price_bars) -> Dict[str,int]`  
      - **Sentiment (S)**, **Momentum (M)**, **RSI (R)** 3요소 계산  
-     - 각 항목에 `+1/0/−1` 점수 부여 → `total` 합산  
+     - 각 항목에 가중치 (S : 0.2, M : 1.2, R : 0.6) 부여 → `total` 합산  
    - `decide_trade(total, holdings) -> str`  
-     - `total ≥ 2` → `"buy"`  
-     - `total ≤ -2` & 보유 수량 > 0 → `"sell"`  
+     - `total ≥ 1` → `"buy"`  
+     - `total ≤ -1` & 보유 수량 > 0 → `"sell"`  
      - 그 외 → `"hold"`  
    - `loop_once() -> None`  
      1. 현지 시간(ET) 확인 → 장중/장외·주말 여부 판정  

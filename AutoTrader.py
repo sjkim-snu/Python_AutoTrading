@@ -179,8 +179,8 @@ class AutoTrader:
 
             # 점수 로그
             self.bot.send_message(
-                f"📊 {sym} 분석 결과 : S {score_data['S']}, "
-                f"M {score_data['M']}, R {score_data['R']} "
+                f"📊 {sym} 분석 결과 : S {score_data['S'] * 0.2}, "
+                f"M {score_data['M'] * 1.2}, R {score_data['R'] * 0.6} "
                 f"→ 합계 {total} → {action}"
             )
 
